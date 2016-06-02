@@ -1,7 +1,7 @@
 # Jelastic Magnolia CMS Add-on
 
 This repository provides [Magnolia CMS](http://www.magnolia-cms.com/) add-on for Jelastic Platform.
-[![GET IT HOSTED](https://raw.githubusercontent.com/JelasticJPS/MagnoliaCMS/master/images/getithosted.png)](http://go.jelastic.com/test?hoster-select=1&theme=modern&app=https://raw.githubusercontent.com/JelasticJPS/MagnoliaCMS/master/Magnolia-5.4.json)
+
 
 **Magnolia CMS** is CMS allows business users to confidently and easily enter, manage and publish content for the web and related channels.
 

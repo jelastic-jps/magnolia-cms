@@ -43,7 +43,7 @@
 				}
 			],
 			"deployments": [{
-					"archive": "https://raw.githubusercontent.com/JelasticJPS/MagnoliaCMS/master/dumps/magnolia-bundled-webapp-5.4.war",
+					"archive": "https://media.githubusercontent.com/media/JelasticJPS/MagnoliaCMS/master/dumps/magnolia-bundled-webapp-5.4.war",
 					"name": "magnolia.war",
 					"context": "ROOT"
 				}
