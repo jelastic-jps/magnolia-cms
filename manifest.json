@@ -8,7 +8,7 @@
 		"categories": [
 				"apps/cms", "apps/content-management"
 		],
-		"logo": "https://raw.githubusercontent.com/JelasticJPS/MagnoliaCMS/master/images/view.png",
+		"logo": "https://raw.githubusercontent.com/jelastic-jps/MagnoliaCMS/master/images/view.png",
 		"type": "java",
 		"homepage": "http://www.magnolia-cms.com/",
 		"description": {
@@ -38,12 +38,12 @@
 			},
 			"upload": [{
 					"nodeType": "tomcat7",
-					"sourcePath": "https://raw.githubusercontent.com/JelasticJPS/MagnoliaCMS/master/libs/mysql-connector-java-5.1.30-bin.jar",
+					"sourcePath": "https://raw.githubusercontent.com/jelastic-jps/MagnoliaCMS/master/libs/mysql-connector-java-5.1.30-bin.jar",
 					"destPath": "${SERVER_WEBROOT}/ROOT/WEB-INF/lib/mysql-connector-java-5.1.30-bin.jar"
 				}
 			],
 			"deployments": [{
-					"archive": "https://media.githubusercontent.com/media/JelasticJPS/MagnoliaCMS/master/dumps/magnolia-bundled-webapp-5.4.war",
+					"archive": "https://media.githubusercontent.com/media/jelastic-jps/MagnoliaCMS/master/dumps/magnolia-bundled-webapp-5.4.war",
 					"name": "magnolia.war",
 					"context": "ROOT"
 				}
