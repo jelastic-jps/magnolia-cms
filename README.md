@@ -10,7 +10,7 @@ Magnolia CMS allows web marketing experts to control branding and content life c
 
 ### Environment Topology
 
-![Magnolia CMS Topology](https://docs.google.com/drawings/d/1WttoA_khYDi93g4g8N8akPo1gvD9BGjTlfGdOPItP8Y/pub?w=505&h=216)
+![magnolia-cms-environment-topology](images/magnolia-cms-environment-topology.png)
 
 ### Specifics
 
