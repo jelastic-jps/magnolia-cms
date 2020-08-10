@@ -1,5 +1,6 @@
 type: install
 id: magnolia
+version: 1.7
 name: Magnolia CMS
 categories:
   - apps/cms
