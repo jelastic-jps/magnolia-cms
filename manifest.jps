@@ -39,6 +39,7 @@ onInstall:
   - set-SQL-settings
   - deploy
   - set-magnolica-conf
+  - restart
 
 actions:
   upload:
@@ -99,9 +100,9 @@ actions:
     - cmd[tomcat9]: rm /opt/tomcat/webapps/ROOT/WEB-INF/lib/derby-10.14.2.0.jar      
 
   restart:
-    - restartContainers:
+    - restartNodes:
         nodeGroup: sqldb
-    - restartContainers:
+    - restartNodes:
         nodeGroup: cp
 
 success:
