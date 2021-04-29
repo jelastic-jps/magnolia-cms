@@ -1,68 +1,109 @@
 type: install
 id: magnolia
-version: 1.7
 name: Magnolia CMS
+logo: https://raw.githubusercontent.com/jelastic-jps/magnolia-cms/master/images/view.png
+homepage: http://www.magnolia-cms.com/
+baseUrl: https://raw.githubusercontent.com/panslothda/magnolia-cms/master
+
+description: Magnolia is an open Java CMS that delivers smartphone simplicity on an enterprise-scale.  
+  The mobile-inspired HTML5 user interface works through customisable, task-focused Apps, 
+  a notification stream called the Pulse, and a system of Favorites for quickly accessing the workspace.
+
 categories:
   - apps/cms
   - apps/content-management
-globals:
-  mysql_pass: "${fn.password}"
-logo: https://raw.githubusercontent.com/jelastic-jps/magnolia-cms/master/images/view.png
-homepage: http://www.magnolia-cms.com/
-description: Magnolia CMS allows business users to confidently and easily enter, manage
-  and publish content for the web and related channels; it allows web marketing experts
-  to control branding and content life cycles across a multitude of web sites, languages,
-  brands and channels; and developers to easily extend and customize the content management
-  system to meet business and editorial needs.
-success: 'Below you will find your admin panel link, adminname and password.</br></br>
-  <table style=''font-size:13px; border: none;''><tr><td>Admin panel URL:</td><td
-  style=''padding-left: 10px;''><a href=''${env.protocol}://${env.domain}/'' target=''_blank''>${env.protocol}://${env.domain}/</a></td></tr>  <tr><td>Admin
-  name:</td><td style=''padding-left: 10px;''>superuser</td></tr><tr><td>Password:</td><td
-  style=''padding-left: 10px;''>superuser</td></tr></table></br>To add custom domain
-  name for your Magnolia CMS installation follow the steps described in our <a href=''http://docs.jelastic.com/custom-domains''
-  target=''_blank''>documentation</a>'
-engine: java7
-nodes:
-  - cloudlets: 16
-    nodeType: tomcat7
-  - nodeType: mysql5
-    cloudlets: 8
+
+env:
+  sslstate: true
+  topology:
+    engine: java14
+    nodes:
+    - cloudlets: 32
+      fixedCloudlets: 8
+      nodeType: tomcat9
+    - cloudlets: 8
+      fixedCloudlets: 2
+      nodeType: mariadb10
+
+#settings:
+#  fields:
+#    - name: demo
+#      type: checkbox
+#      caption: Include Magnolia CMS demo content
+#      value: true
+#      hideLabel: false
+#      hidden: false
+
 onInstall:
-  - prepareSqlDatabase:
-    - nodeType: mysql5
-      loginCredentials:
-        user: root
-        password: "${nodes.mysql5.password}"
-      newDatabaseName: magnolia
-      newDatabaseUser:
-        name: magnolia
-        password: "${globals.mysql_pass}"
-  - deploy:
-    - archive: https://media.githubusercontent.com/media/jelastic-jps/magnolia-cms/master/dumps/magnolia-bundled-webapp-5.4.war
-      name: magnolia.war
-      context: ROOT
-  - upload:
-      nodeType: tomcat7
-      sourcePath: https://raw.githubusercontent.com/jelastic-jps/magnolia-cms/master/libs/mysql-connector-java-5.1.30-bin.jar
-      destPath: "${SERVER_WEBROOT}/ROOT/WEB-INF/lib/mysql-connector-java-5.1.30-bin.jar"
-  - replaceInFile:
-    - nodeType: tomcat7
-      path: "/opt/tomcat/webapps/ROOT/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml"
-      replacements:
-      - replacement: "${nodes.mysql5.address}"
-        pattern: localhost
-      - replacement: value="magnolia
-        pattern: value="root
-      - replacement: value="${globals.mysql_pass}"
-        pattern: value="password"
-      - replacement: magnoliaPath="${rep.home}/workspaces" rootPath="${rep.home}/workspaces"
-        pattern: rootPath="${rep.home}/workspaces"
-      - replacement: magnoliaPath="${rep.home}/version" rootPath="${rep.home}/workspaces"
-        pattern: rootPath="${rep.home}/version"
-    - nodeType: tomcat7
-      path: "/opt/tomcat/webapps/ROOT/WEB-INF/config/default/magnolia.properties"
-      replacements:
-      - replacement: magnolia.repositories.jackrabbit.config=WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
-        pattern: magnolia.repositories.jackrabbit.config=.*
-  - restartNodes:
-      nodeType: tomcat7
+  - upload
+  - set-SQL-settings
+  - deploy
+  - set-magnolica-conf
+
+actions:
+  upload:
+    upload:
+      - nodeType: tomcat9
+        sourcePath: ${baseUrl}/libs/mysql-connector-java-8.0.23.jar
+        destPath: "/opt/tomcat/lib/mysql-connector-java-8.0.23.jar"
+
+  set-SQL-settings:
+    prepareSqlDatabase:
+      - nodeType: mariadb10
+        loginCredentials:
+          user: root
+          password: "${nodes.sqldb.password}"
+        newDatabaseName: magnolia
+        newDatabaseUser:
+          name: magnolia
+          password: "${user.appPassword}"
+    cmd [mariadb10]: mysql -u root -p${nodes.sqldb.password} -e "grant all privileges on *.* to 'magnolia'@'%'"
+
+  deploy:
+      deploy:
+        archive: https://github.com/panslothda/magnolia-cms/raw/master/dumps/magnolia-community-demo-webapp-6.2.8.war
+        name: magnolia-community-demo-webapp-6.2.8.war
+        context: ROOT
+#    - if ('${settings.demo}' == 'true'):
+#        deploy:
+#          archive: https://github.com/panslothda/magnolia-cms/raw/master/dumps/magnolia-community-demo-webapp-6.2.8.war
+#          name: magnolia-community-demo-webapp-6.2.8.war
+#          context: ROOT
+#    - else:
+#        deploy:
+#          archive: https://github.com/panslothda/magnolia-cms/raw/master/dumps/magnolia-community-webapp-6.2.8.war
+#          name: magnolia-community-webapp-6.2.8.war
+#          context: ROOT
+
+  set-magnolica-conf:
+    - replaceInFile:
+        nodeType: tomcat9
+        path: /opt/tomcat/webapps/ROOT/WEB-INF/config/default/magnolia.properties
+        replacements:
+          - pattern: jackrabbit-bundle-h2-search.xml
+            replacement: jackrabbit-bundle-mysql-search.xml
+
+    - replaceInFile:
+        nodeType: tomcat9
+        path: /opt/tomcat/webapps/ROOT/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
+        replacements:
+          - pattern: mysql://localhost:3306
+            replacement: mysql://${nodes.sqldb.address}    
+          - pattern: value="root"
+            replacement: value="magnolia"
+          - pattern: value="password"
+            replacement: value="${user.appPassword}"
+          - pattern: value="root"
+            replacement: value="magnolia"
+
+    - cmd[tomcat9]: rm /opt/tomcat/webapps/ROOT/WEB-INF/lib/derby-10.14.2.0.jar      
+
+  restart:
+    - restartContainers:
+        nodeGroup: sqldb
+    - restartContainers:
+        nodeGroup: cp
+
+success:
+  email: /text/success-text.md
+  text: /text/success-text.md
