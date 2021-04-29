@@ -16,17 +16,17 @@ Magnolia CMS allows web marketing experts to control branding and content life c
 
 Layer                |     Server    | Number of CTs <br/> by default | Cloudlets per CT <br/> (reserved/dynamic) | Options
 -------------------- | --------------| :----------------------------: | :---------------------------------------: | :-----:
-AS                   | Tomcat Java |       1                        |           1 / 16                          | -
-DB                   |    MySQL      |       1                        |           1 / 8                           | -
+AS                   | Tomcat Java 	 |       1                        |           8 / 32                          | -
+DB                   |    MariaDB    |       1                        |           2 / 8                           | -
 
 * AS - Application server 
 * DB - Database 
 * CT - Container
 
-**Magnolia CMS Version**: 5.4.0<br/>
-**Tomcat Version**: 7.0.67<br/>
-**Java Engine**: Java 7<br/>
-**MySQL Database**: 5.7.12
+**Magnolia CMS Version**: 6.2.8<br/>
+**Tomcat Version**: 9.x<br/>
+**Java Engine**: 14<br/>
+**MariaDB Database**: 10.x
 
 ### Deployment
 
