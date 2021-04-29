@@ -1,13 +1,11 @@
-OpenCMS has been installed!
+MagnolicaCMS has been installed!
 
 Login with these details:
 
-**Admin Panel**: [https://${env.domain}/login](https://${env.domain}/login)  
-**Username**: Admin  
-**Password**: admin
+**Admin Panel**: [https://${env.domain}/](https://${env.domain}/)  
+**Username**: superuser  
+**Password**: superuser
 
-Please make sure to change the Password directly after the login.
+Please make sure that you change your password afterwards!
 
-The Launchpad for the Management (after login) is found here:[https://${env.domain}/workplace#!launchpad](https://${env.domain}/workplace#!launchpad)  
-
-You can find OpenCMS documentation here: https://documentation.opencms.org/central/
+The starting documentation can be found here: https://docs.magnolia-cms.com/product-docs/Authoring/Editing-pages.html
