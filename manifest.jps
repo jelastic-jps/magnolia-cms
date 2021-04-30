@@ -25,19 +25,19 @@ env:
       fixedCloudlets: 2
       nodeType: mariadb10
 
-#settings:
-#  fields:
-#    - name: demo
-#      type: checkbox
-#      caption: Include Magnolia CMS demo content
-#      value: true
-#      hideLabel: false
-#      hidden: false
+settings:
+  fields:
+    - name: demo
+      type: checkbox
+      caption: Include Magnolia CMS demo content
+      value: true
+      hideLabel: false
+      hidden: false
 
 onInstall:
   - upload
   - set-SQL-settings
-  - deploy
+  - deployApp
   - set-magnolica-conf
   - restart
 
@@ -60,21 +60,17 @@ actions:
           password: "${user.appPassword}"
     cmd [mariadb10]: mysql -u root -p${nodes.sqldb.password} -e "grant all privileges on *.* to 'magnolia'@'%'"
 
-  deploy:
-      deploy:
-        archive: https://github.com/panslothda/magnolia-cms/raw/master/dumps/magnolia-community-demo-webapp-6.2.8.war
-        name: magnolia-community-demo-webapp-6.2.8.war
-        context: ROOT
-#    - if ('${settings.demo}' == 'true'):
-#        deploy:
-#          archive: https://github.com/panslothda/magnolia-cms/raw/master/dumps/magnolia-community-demo-webapp-6.2.8.war
-#          name: magnolia-community-demo-webapp-6.2.8.war
-#          context: ROOT
-#    - else:
-#        deploy:
-#          archive: https://github.com/panslothda/magnolia-cms/raw/master/dumps/magnolia-community-webapp-6.2.8.war
-#          name: magnolia-community-webapp-6.2.8.war
-#          context: ROOT
+  deployApp:
+    - if ('${settings.demo}' == 'true'):
+        deploy:
+          archive: https://github.com/panslothda/magnolia-cms/raw/master/dumps/magnolia-community-demo-webapp-6.2.8.war
+          name: magnolia-community-demo-webapp-6.2.8.war
+          context: ROOT
+    - else:
+        deploy:
+          archive: https://github.com/panslothda/magnolia-cms/raw/master/dumps/magnolia-community-webapp-6.2.8.war
+          name: magnolia-community-webapp-6.2.8.war
+          context: ROOT
 
   set-magnolica-conf:
     - replaceInFile:
