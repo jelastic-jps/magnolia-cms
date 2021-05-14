@@ -2,9 +2,9 @@ type: install
 id: magnolia
 version: 1.7
 name: Magnolia CMS
-logo: https://raw.githubusercontent.com/jelastic-jps/magnolia-cms/master/images/view.png
+logo: /images/view.png
 homepage: http://www.magnolia-cms.com/
-baseUrl: https://raw.githubusercontent.com/panslothda/magnolia-cms/master
+baseUrl: https://raw.githubusercontent.com/jelastic-jps/magnolia-cms/master
 
 description: Magnolia is an open Java CMS that delivers smartphone simplicity on an enterprise-scale.  
   The mobile-inspired HTML5 user interface works through customisable, task-focused Apps, 
@@ -63,12 +63,12 @@ actions:
   deployApp:
     - if ('${settings.demo}' == 'true'):
         deploy:
-          archive: https://github.com/panslothda/magnolia-cms/raw/master/dumps/magnolia-community-demo-webapp-6.2.8.war
+          archive: https://github.com/jelastic-jps/magnolia-cms/raw/master/dumps/magnolia-community-demo-webapp-6.2.8.war
           name: magnolia-community-demo-webapp-6.2.8.war
           context: ROOT
     - else:
         deploy:
-          archive: https://github.com/panslothda/magnolia-cms/raw/master/dumps/magnolia-community-webapp-6.2.8.war
+          archive: https://github.com/jelastic-jps/magnolia-cms/raw/master/dumps/magnolia-community-webapp-6.2.8.war
           name: magnolia-community-webapp-6.2.8.war
           context: ROOT
 
