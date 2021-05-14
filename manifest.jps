@@ -1,5 +1,6 @@
 type: install
 id: magnolia
+version: 1.7
 name: Magnolia CMS
 logo: https://raw.githubusercontent.com/jelastic-jps/magnolia-cms/master/images/view.png
 homepage: http://www.magnolia-cms.com/
