@@ -14,17 +14,16 @@ categories:
   - apps/cms
   - apps/content-management
 
-env:
-  sslstate: true
-  topology:
-    engine: java14
-    nodes:
-    - cloudlets: 32
-      fixedCloudlets: 8
-      nodeType: tomcat9
-    - cloudlets: 8
-      fixedCloudlets: 2
-      nodeType: mariadb10
+ssl: true
+engine: java14
+
+nodes:
+  - cloudlets: 32
+    fixedCloudlets: 8
+    nodeType: tomcat9
+  - cloudlets: 8
+    fixedCloudlets: 2
+    nodeType: mariadb10
 
 settings:
   fields:
@@ -102,6 +101,4 @@ actions:
     - restartNodes:
         nodeGroup: cp
 
-success:
-  email: /text/success-text.md
-  text: /text/success-text.md
+success: /text/success-text.md
