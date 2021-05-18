@@ -15,7 +15,7 @@ categories:
   - apps/content-management
 
 ssl: true
-engine: java14
+engine: java11
 
 nodes:
   - cloudlets: 32
