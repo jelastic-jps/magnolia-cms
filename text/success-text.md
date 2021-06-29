@@ -6,4 +6,4 @@ Login with these details:
 
 We recommend you to change password after first login!
 
-The starting documentation can be found here: https://docs.magnolia-cms.com/product-docs/Authoring/Editing-pages.html
+The starting documentation can be found here: [https://docs.magnolia-cms.com/product-docs/Authoring/Editing-pages.html](https://docs.magnolia-cms.com/product-docs/Authoring/Editing-pages.html)
