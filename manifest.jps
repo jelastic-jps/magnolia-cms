@@ -9,7 +9,7 @@ baseUrl: https://raw.githubusercontent.com/jelastic-jps/magnolia-cms/master
 globals:
   dumpsUrl: https://github.com/jelastic-jps/magnolia-cms/raw/master/dumps
 
-description: Magnolia is an open Java CMS that delivers smartphone simplicity on an enterprise-scale.  
+description: Magnolia is an open-source Java CMS that delivers smartphone simplicity on an enterprise-scale.  
   The mobile-inspired HTML5 user interface works through customisable, task-focused Apps, 
   a notification stream called the Pulse, and a system of Favorites for quickly accessing the workspace.
 
