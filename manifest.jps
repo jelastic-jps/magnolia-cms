@@ -5,7 +5,6 @@ name: Magnolia CMS
 logo: /images/view.png
 homepage: http://www.magnolia-cms.com/
 baseUrl: https://raw.githubusercontent.com/jelastic-jps/magnolia-cms/master
-
 globals:
   dumpsUrl: https://github.com/jelastic-jps/magnolia-cms/raw/master/dumps
 
@@ -18,7 +17,7 @@ categories:
   - apps/content-management
 
 ssl: true
-engine: java11
+engine: openjdk11
 
 nodes:
   - cloudlets: 32
@@ -47,13 +46,13 @@ onInstall:
 actions:
   upload:
     upload:
-      - nodeType: tomcat9
+      - nodeGroup: cp
         sourcePath: ${baseUrl}/libs/mysql-connector-java-8.0.23.jar
         destPath: "/opt/tomcat/lib/mysql-connector-java-8.0.23.jar"
 
   set-SQL-settings:
     prepareSqlDatabase:
-      - nodeType: mariadb10
+      - nodeGroup: sqldb
         loginCredentials:
           user: root
           password: "${nodes.sqldb.password}"
@@ -61,7 +60,7 @@ actions:
         newDatabaseUser:
           name: magnolia
           password: "${user.appPassword}"
-    cmd [mariadb10]: mysql -u root -p${nodes.sqldb.password} -e "grant all privileges on *.* to 'magnolia'@'%'"
+    cmd[sqldb]: mysql -u root -p${nodes.sqldb.password} -e "grant all privileges on *.* to 'magnolia'@'%'"
 
   deployApp:
     - if ('${settings.demo}' == 'true'):
@@ -77,14 +76,14 @@ actions:
 
   set-magnolica-conf:
     - replaceInFile:
-        nodeType: tomcat9
+        nodeGroup: cp
         path: /opt/tomcat/webapps/ROOT/WEB-INF/config/default/magnolia.properties
         replacements:
           - pattern: jackrabbit-bundle-h2-search.xml
             replacement: jackrabbit-bundle-mysql-search.xml
 
     - replaceInFile:
-        nodeType: tomcat9
+        nodeGroup: cp
         path: /opt/tomcat/webapps/ROOT/WEB-INF/config/repo-conf/jackrabbit-bundle-mysql-search.xml
         replacements:
           - pattern: mysql://localhost:3306
@@ -96,7 +95,7 @@ actions:
           - pattern: value="root"
             replacement: value="magnolia"
 
-    - cmd[tomcat9]: rm /opt/tomcat/webapps/ROOT/WEB-INF/lib/derby-10.14.2.0.jar      
+    - cmd[cp]: rm /opt/tomcat/webapps/ROOT/WEB-INF/lib/derby-10.14.2.0.jar      
 
   restart:
     - restartNodes:
