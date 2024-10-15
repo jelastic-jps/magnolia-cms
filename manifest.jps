@@ -4,7 +4,7 @@ version: 1.7
 name: Magnolia CMS
 logo: /images/view.png
 homepage: http://www.magnolia-cms.com/
-baseUrl: https://raw.githubusercontent.com/sych74/magnolia-cms/JE-71758
+baseUrl: https://raw.githubusercontent.com/jelastic-jps/magnolia-cms/master
 globals:
   dumpsUrl: https://github.com/jelastic-jps/magnolia-cms/raw/master/dumps
 
